@@ -1,6 +1,6 @@
 
 
-dados_completos=read.csv(file = "C:/Users/matheus/Desktop/Projeto_Covid_em_R/datasets/Covid_Data.csv")
+dados_completos=read.csv(file = "C:/Users/matheus/Desktop/Projeto_Covid_em_R/datasets/owid-covid-data.csv")
 head(dados_completos,2)
 dim(dados_completos)
 
@@ -34,7 +34,7 @@ dados_cortados_brazil[is.na(dados_cortados_brazil)]=0
 sum(is.na(dados_cortados_brazil$date))
 
 
-plot(new_deaths~date,main="dados do Brazil", xlab="Ano/meses", ylab="novas mortes", data = dados_cortados_brazil, type = "l")
+plot(new_deaths~date,main="Dados do Brazil", xlab="Ano/meses", ylab="Novas mortes", data = dados_cortados_brazil, type = "l")
 
 
 

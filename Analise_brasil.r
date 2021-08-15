@@ -1,3 +1,4 @@
+library(lubridate)
 
 
 dados_completos=read.csv(file = "C:/Users/matheus/Desktop/Projeto_Covid_em_R/datasets/owid-covid-data.csv")
@@ -18,7 +19,7 @@ dias_pandemia=max(dados_completos_brazil$date)-min(dados_completos_brazil$date)
 print(dias_pandemia)
 class(dias_pandemia)
 
-#quero analisar a quantidade de mortes pelos dias
+
 #seleciono as variaveis importantes
 dados_cortados_brazil=dados_completos_brazil[, c("date","new_deaths")]
 
@@ -36,10 +37,18 @@ sum(is.na(dados_cortados_brazil$date))
 
 plot(new_deaths~date,main="Dados do Brazil", xlab="Ano/meses", ylab="Novas mortes", data = dados_cortados_brazil, type = "l")
 
+#analise em 2020
 
+dados_2020_brazil=subset(dados_cortados_brazil,year(dados_cortados_brazil$date)=="2020")
 
+nomes_meses=c("feb","mar","apr","may", "jun", "jul", "aug", "sept","oct","nov", "dec" )
+meses=2:12
 
+mortes_mensais_2020=numeric()
+for (i in 1:11){
+  mortes_mensais_2020[i]=sum(subset(dados_2020_brazil, month(dados_2020$date)==meses[i])$new_deaths)
+  
+}
 
-
-
+barplot(mortes_mensais_2020,xlab="meses", ylab="mortes", main = "Ano 2020", names.arg = nomes_meses, col = "blue")
 

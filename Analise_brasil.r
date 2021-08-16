@@ -14,13 +14,13 @@ class(dados_completos$date)
 
 dados_completos_brazil <- subset(dados_completos, location=="Brazil")
 
-dias_pandemia_brazil<-max(dados_completos_brazil$date)-min(dados_completos_brazil$date)
+dias_pandemia_brazil <- max(dados_completos_brazil$date)-min(dados_completos_brazil$date)
 print(dias_pandemia_brazil)
 class(dias_pandemia_brazil)
 
 
 #seleciono as variaveis importantes
-dados_cortados_brazil=dados_completos_brazil[, c("date","new_deaths")]
+dados_cortados_brazil <- dados_completos_brazil[, c("date","new_deaths")]
 
 #descobrindo quantos valores NA há nesses dados:
 
@@ -38,7 +38,7 @@ plot(new_deaths~date,main="Dados do Brazil", xlab="Ano/meses", ylab="Novas morte
 
 #analise em 2020
 
-dados_2020_brazil<-subset(dados_cortados_brazil,year(dados_cortados_brazil$date)=="2020")
+dados_2020_brazil <- subset(dados_cortados_brazil,year(dados_cortados_brazil$date)=="2020")
 
 nomes_meses <- c("feb","mar","apr","may", "jun", "jul", "aug", "sept","oct","nov", "dec" )
 meses <- 2:12

@@ -91,5 +91,10 @@ for (i in 1:length(meses_2021)){
 barplot(mortes_mensais_2021, xlab = "meses", ylab = "mortes", main = "ano 2021", names.arg = meses_2021, col = "grey")
 
 
+par(mfrow=c(1,2))
+barplot(mortes_mensais_2020,xlab = "meses", ylab = "mortes", main = "Ano 2020", names.arg = nomes_meses_2020, col = "blue")
+barplot(mortes_mensais_2021, xlab = "meses", ylab = "mortes", main = "ano 2021", names.arg = meses_2021, col = "grey")
+
+dev.off()
 
 

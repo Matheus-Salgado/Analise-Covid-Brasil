@@ -1,5 +1,6 @@
 library(lubridate)
 
+
 ler_dados <- function(arquivo){
   
   dados <- read.csv(file = arquivo)
@@ -19,7 +20,7 @@ escolher_ano <- function(dados, ano){
 }
 
 dados_completos <- ler_dados("C:/Users/matheus/Desktop/Projeto_Covid_em_R/datasets/owid-covid-data.csv")
-
+dados_vacinacao <- ler_dados("C:/Users/matheus/Desktop/Projeto_covid_em_R/datasets/VaccinationData.csv")
 
 dim(dados_completos)
 
@@ -98,3 +99,44 @@ barplot(mortes_mensais_2021, xlab = "meses", ylab = "mortes", main = "ano 2021",
 dev.off()
 
 
+class(dados_vacinacao$date)  
+dados_vacinacao$date <- as.Date(dados_vacinacao$date)  
+
+
+dados_vacinacao_brazil <- subset(dados_vacinacao, location == "Brazil")
+
+sum(is.na(dados_vacinacao_brazil$total_vaccinations))
+sum(is.na(dados_vacinacao_brazil$date))
+sum(is.na(dados_vacinacao_brazil$daily_vaccinations))
+dados_vacinacao_brazil$daily_vaccinations[is.na(dados_vacinacao_brazil$daily_vaccinations)] <- 0
+
+length(dados_vacinacao_brazil$total_vaccinations)
+
+#possibilitar o uso do IF para tratar os dados
+dados_vacinacao_brazil$total_vaccinations[is.na(dados_vacinacao_brazil$total_vaccinations)] <- 0
+
+#caso não foi informado o total de pessoas, eu suponho que é o mesmo do dia anterior
+for (i in 2:length(dados_vacinacao_brazil$total_vaccinations)){
+  
+  if (dados_vacinacao_brazil$total_vaccinations[i] == 0){
+    dados_vacinacao_brazil$total_vaccinations[i] <- dados_vacinacao_brazil$total_vaccinations[i-1]
+  }
+}
+  
+plot(dados_vacinacao_brazil$total_vaccinations~dados_vacinacao_brazil$date,
+     main = "Vacinaçao em 2021", xlab = "mês", ylab = "pessoas vacinadas", type = "l")
+
+
+plot(dados_vacinacao_brazil$daily_vaccinations~dados_vacinacao_brazil$date,
+     main = "doses aplicadas por dia - 2021", xlab = "mês",
+     ylab = "quantidade de doses", type = "l")
+
+
+par(mfrow = c(1,2)) 
+
+plot(dados_2021_brazil$new_deaths~dados_2021_brazil$date,
+     main="mortes diárias Brazil 2021", xlab="mês", ylab="Novas mortes", type = "l")
+
+plot(dados_vacinacao_brazil$daily_vaccinations~dados_vacinacao_brazil$date,
+     main = "doses aplicadas por dia - 2021", xlab = "mês",
+     ylab = "quantidade de doses", type = "l")

@@ -27,9 +27,6 @@ dados_completos %>%
   ggplot() +
   geom_line(aes(x = date, y = new_deaths), color = "blue")
 
-dados_completos %>%
-  select(date,location,new_deaths) %>%
-  filter (location == "Brazil", year(date) == "2020") %>%
   
 dados_completos %>%
   filter(location == "Brazil") %>%
@@ -40,14 +37,16 @@ dados_completos %>%
 
 dados_completos %>%
   select(location, new_deaths) %>%
-  filter(location %in% c("Brazil", "United States", "Spain", "Portugal", "Russia")) %>%
+  filter(location %in% c("Brazil", "United States", "Russia", "Mexico", "India")) %>%
   group_by(location) %>%
   summarize(media_mortes = mean (new_deaths)) %>%
   ggplot() +
-  geom_col(aes(x = location, y = media_mortes), color = "blue")
+  geom_col(aes(x = reorder(location,-media_mortes), y = media_mortes), color = "blue", fill = "blue") +
+  labs(title = "Média das mortes diárias por país", x = "país", y = "valor da média das mortes diárias") +
+  theme_bw() +
+  theme(axis.text = element_text(size = 14), axis.title = element_text(size = 8),
+        plot.title = element_text(size = 20, face = "bold", color = "darkblue"))
 
 
 
-dados_completos$location <- as.factor(dados_completos$location)
-levels(dados_completos$location)
 
